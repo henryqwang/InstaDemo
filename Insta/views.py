@@ -5,7 +5,10 @@ from django.urls import reverse, reverse_lazy
 
 from Insta.models import Post
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+# from django.contrib.auth.forms import UserCreationForm
+from Insta.forms import CustomUserCreationForm
 
 
 class HelloWorld(TemplateView):
@@ -22,10 +25,11 @@ class PostDetailView(DetailView):
     template_name = "post_detail.html"
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = "post_create.html"
     fields = "__all__"  # Requires the view to provide all fields declared in the associated model
+    login_url = "login"
 
 
 class PostUpdateView(UpdateView):
@@ -41,6 +45,7 @@ class PostDeleteView(DeleteView):
 
 
 class SignUp(CreateView):
-    form_class = UserCreationForm
+    # form_class = UserCreationForm
+    form_class = CustomUserCreationForm
     template_name = "signup.html"
     success_url = reverse_lazy("login")
