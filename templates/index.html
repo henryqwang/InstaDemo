@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load custom_tags %}
 {% block title %}Index{% endblock %}
 
 {% block content %}
@@ -11,7 +12,7 @@
 
             <div class="card__panel-head">
                 <div class="poster__info">
-                    <a href="{% url 'helloworld' %}" class="poster__name">
+                    <a href="{% url 'user_detail' post.author.id %}" class="poster__name">
                         {% if post.author.profile_pic %}
                         <img class="poster__profilepic" src="/{{ post.author.profile_pic.url }}">
                         {% endif %}
@@ -34,8 +35,12 @@
                     {% endif %}
                 </div>
                 <section class="input-row">
-                    <i class="fa fa-heart-o submit-like" aria-hidden="true"></i>
+                    <i class="fa {% has_user_liked_post post user %} submit-like" aria-hidden="true"></i>
+                    <div class="hidden-data {{ post.pk }}" style="display: none;">
+                        <span class="post-pk">{{ post.pk }}</span>
+                    </div>
                 </section>
+                
                 {% comment %} <ul class="comment-list">
                     <li class="comment-list__comment">
                         <a class="user" href="{% url 'profile' post.author.pk %}">
