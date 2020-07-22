@@ -127,4 +127,4 @@ LOGOUT_REDIRECT_URL = "posts"
 
 AUTH_USER_MODEL = "Insta.InstaUser"
 
-STATICFILES_DIRS = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
